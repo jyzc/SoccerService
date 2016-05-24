@@ -1,0 +1,1 @@
+#include "StdAfx.h"#include "WXZParse.h"Parse::Parse(){}Parse::~Parse(){}
