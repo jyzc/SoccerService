@@ -16,6 +16,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
+    <None Include="开发进度说明.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">

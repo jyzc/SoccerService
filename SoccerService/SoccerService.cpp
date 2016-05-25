@@ -8,22 +8,26 @@
 #include <time.h>			/*time_t*/
 #include "Util.h"
 
+#include "Global.h"
+
 //////////////////////////////////////////////////////////////////////////
 
-void MainProcess();
-void DrawHeader();
+void httpProcess();
+void drawHeader();
 
 //////////////////////////////////////////////////////////////////////////
 int _tmain(int argc, _TCHAR* argv[])
 {
-	MainProcess();
-	return 0;
+	drawHeader();
+	Global::init();
+
+	//Global全局变量会释放，所以线程要么写在这里，要么写死循环
+	while (1)
+		Sleep(10000);
 }
 
-void MainProcess()
+void httpProcess()
 {
-	DrawHeader();
-
 	time_t tt;
 	time(&tt);  
 
@@ -31,7 +35,7 @@ void MainProcess()
 	http.init();
 	//1
 	http.setHostName(L"live3.win007.com");
-	wstring s=L"/vbsxml/bfdata.js?r=007"+l_to_wcs(tt)+L"000";	
+	wstring s=L"/vbsxml/bfdata.js?r=007"+l_to_wcs((long)tt)+L"000";	
 	http.setPath(s);
 
 	wstring request,response;
@@ -73,12 +77,12 @@ void MainProcess()
 	http.uninit();
 }
 
-void DrawHeader()
+void drawHeader()
 {
 	cout<<"++++++++++++++++++++++++++++++++++++++++++++++++\n"
 		<<"+         MatchServer V1.0                     +\n"
 		<<"+                                              +\n"
-		<<"+         Release date:2016-5-10               +\n"
+		<<"+         Release date:2016-5-25               +\n"
 		<<"++++++++++++++++++++++++++++++++++++++++++++++++\n"<<endl;	
 }
 

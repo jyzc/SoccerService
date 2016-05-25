@@ -47,22 +47,18 @@ public:
 
 
 private:
-	long id_;			
+	long id_;				//比赛ID
+	time_t date_;			//比赛时间
+	char result_;			//比赛结果 0，1，3
+	MatchStatus status_;	//比赛状态	
+	char homeScore_;		//主队进球
+	char guestScore_;		//客队进球
+	char homeScoreHarf_;	//主队上半进球
+	char guestScoreHarf_;	//客队上半进球
 
-	time_t date_;	
-
-	char result_;	
-	MatchStatus status_;	
-
-	char homeScore_;
-	char guestScore_;	
-	char homeScoreHarf_;
-	char guestScoreHarf_;	
-
-	Team* homeTeam_;		
-	Team* guestTeam_;
-
-	Event* event_;		
+	Team* homeTeam_;		//主队
+	Team* guestTeam_;		//客队
+	Event* event_;			//赛事
 
 };
 
