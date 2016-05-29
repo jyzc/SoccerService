@@ -46,6 +46,15 @@
     <ClInclude Include="Util.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="WXZNetRequest.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="WXZMysqlOperator.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="WXZDBOperator.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -73,6 +82,15 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Util.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="WXZNetRequest.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="WXZMysqlOperator.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="WXZDBOperator.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

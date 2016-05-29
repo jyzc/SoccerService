@@ -2,7 +2,17 @@
 #include "Global.h"
 // #include <unistd.h>		/* usleep */
 #include <iostream>			/* cout */
+#include "WXZNetRequest.h"
+#include "WXZDBOperator.h"
 
+//////////////////////////////////////////////////////////////////////////
+void compareList(const vector<Match*> matchList, const vector<Match*> todayList, vector<Match*>& updateList)
+{
+
+}
+
+
+//////////////////////////////////////////////////////////////////////////
 Global::Global()
 {
 
@@ -60,13 +70,39 @@ void* Global::scanTodayThreadStatic(void*  arg)
 
 void  Global::scanTodayThread()
 {
-	int i=0;
 	while (!scanTodayThreadTerminate_)
 	{
+		//请求网络，获得比赛列表matchList
+		NetRequest netRequest;
+		vector<Match*> matchList, todayList, updateList;
+		netRequest.getMatchList(matchList);
+
+
+		//读取数据库，获得当天比赛列表todayList
+		DBOperator dbOperator;
 		pthread_mutex_lock(&dbMutex_);
-		cout<<"[TodayThread]:"<<i++<<endl;
+		dbOperator.getTodayList(todayList);
 		pthread_mutex_unlock(&dbMutex_);
 
+		//比较获得updateList，
+		compareList(matchList, todayList, updateList);
+
+		//请求网页信息
+		for (int i=0; i<(int)updateList.size(); i++)
+		{
+			Match* updateMatch = updateList[i];
+			//请求交锋记录
+			netRequest.getMatchData(updateMatch);
+
+
+			//算法,是否封装dll？
+
+		}
+
+		//添加数据入库
+		pthread_mutex_lock(&dbMutex_);
+		dbOperator.updateData(updateList);
+		pthread_mutex_unlock(&dbMutex_);
 
 		Sleep(1000);
 	}//end while (scanTodayThreadTerminate_)	

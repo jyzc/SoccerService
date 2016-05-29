@@ -84,9 +84,12 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Util.h" />
     <ClInclude Include="WXZCompany.h" />
+    <ClInclude Include="WXZDBOperator.h" />
     <ClInclude Include="WXZEvent.h" />
     <ClInclude Include="WXZHttp.h" />
     <ClInclude Include="WXZMatch.h" />
+    <ClInclude Include="WXZMysqlOperator.h" />
+    <ClInclude Include="WXZNetRequest.h" />
     <ClInclude Include="WXZTeam.h" />
   </ItemGroup>
   <ItemGroup>
@@ -98,9 +101,12 @@
     </ClCompile>
     <ClCompile Include="Util.cpp" />
     <ClCompile Include="WXZCompany.cpp" />
+    <ClCompile Include="WXZDBOperator.cpp" />
     <ClCompile Include="WXZEvent.cpp" />
     <ClCompile Include="WXZHttp.cpp" />
     <ClCompile Include="WXZMatch.cpp" />
+    <ClCompile Include="WXZMysqlOperator.cpp" />
+    <ClCompile Include="WXZNetRequest.cpp" />
     <ClCompile Include="WXZTeam.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
