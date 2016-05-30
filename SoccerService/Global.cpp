@@ -5,6 +5,9 @@
 #include "WXZNetRequest.h"
 #include "WXZDBOperator.h"
 
+#include "..\\MatchAlgorithm\\MatchAlgorithm.h"
+#pragma comment(lib, "..\\Debug\\MatchAlgorithm.lib")
+
 //////////////////////////////////////////////////////////////////////////
 void compareList(const vector<Match*> matchList, const vector<Match*> todayList, vector<Match*>& updateList)
 {
@@ -96,7 +99,7 @@ void  Global::scanTodayThread()
 
 
 			//算法,是否封装dll？
-
+			CalculateH(updateMatch);
 		}
 
 		//添加数据入库
