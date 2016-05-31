@@ -11,7 +11,8 @@
 #include <tchar.h>
 
 
-#include <Windows.h>	/* Sleep */
+#include <Windows.h>		/* Sleep */
+#include <iostream>			/* cout */
 
 #include <string>
 #include <vector>

@@ -2,7 +2,6 @@
 //
 
 #include "stdafx.h"
-#include <iostream>			/* cout */
 
 #include "WXZHttp.h"
 #include <time.h>			/*time_t*/

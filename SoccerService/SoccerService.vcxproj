@@ -49,13 +49,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\sdk\pthread\Pre-built.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\dev\sdk\boost_1_51_0;D:\dev\sdk\mysql-connector-c++-noinstall-1.1.7-win32\include;D:\dev\sdk\pthread\Pre-built.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>D:\SDK\pthread\Pre-built.2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>pthreadVC2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\dev\sdk\mysql-connector-c++-noinstall-1.1.7-win32\lib;D:\dev\SDK\pthread\Pre-built.2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>pthreadVC2.lib;mysqlcppconn.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -80,6 +80,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Global.h" />
+    <ClInclude Include="MysqlOperator.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Util.h" />
@@ -90,10 +92,12 @@
     <ClInclude Include="WXZMatch.h" />
     <ClInclude Include="WXZMysqlOperator.h" />
     <ClInclude Include="WXZNetRequest.h" />
+    <ClInclude Include="WXZParse.h" />
     <ClInclude Include="WXZTeam.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Global.cpp" />
+    <ClCompile Include="MysqlOperator.cpp" />
     <ClCompile Include="SoccerService.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -107,7 +111,11 @@
     <ClCompile Include="WXZMatch.cpp" />
     <ClCompile Include="WXZMysqlOperator.cpp" />
     <ClCompile Include="WXZNetRequest.cpp" />
+    <ClCompile Include="WXZParse.cpp" />
     <ClCompile Include="WXZTeam.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="SoccerService.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
