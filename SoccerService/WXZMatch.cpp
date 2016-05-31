@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "WXZMatch.h"
-
+#include "WXZTeam.h"
+#include "WXZEvent.h"
 
 //////////////////////////////////////////////////////////////////////////
 Match::Match()
@@ -21,7 +22,12 @@ Match::Match()
 
 Match::~Match()
 {
-
+	if (homeTeam_)
+		delete homeTeam_;
+	if (guestTeam_)
+		delete guestTeam_;
+	if (event_)
+		delete event_;
 }
 
 //////////////////////////////////////////////////////////////////////////

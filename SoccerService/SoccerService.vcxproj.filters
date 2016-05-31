@@ -64,6 +64,9 @@
     <ClInclude Include="MysqlOperator.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="ParseFileBfdata.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -106,6 +109,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="MysqlOperator.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ParseFileBfdata.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

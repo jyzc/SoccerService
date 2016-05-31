@@ -93,11 +93,25 @@ std::string l_to_mbs(long val)
 	string s;
 	ss<<val;
 	ss>>s;
-// 	if (! ss.good())
-// 		return "";
 	return s;
 }
 
+long wbs_to_l(std::wstring val)
+{
+	std::wstringstream ss;
+	long s;
+	ss<<val;
+	ss>>s;
+	return s;
+}
+int wbs_to_i(std::wstring val)
+{
+	std::wstringstream ss;
+	int s;
+	ss<<val;
+	ss>>s;
+	return s;
+}
 
 
 std::string Utf8ToAnsi(string & utf8)
@@ -158,3 +172,26 @@ std::wstring MBytesToWString(const char* lpcszString)
 	delete [] pUnicode;
 	return wString;
 }
+
+
+int split(const wstring json, const wstring ch, vector<wstring>& retList)
+{
+	int cellSize = ch.size();
+	retList.clear();
+
+	int posStart=0, posStop=0;
+	wstring value = L"";
+	do 
+	{
+		posStop = json.find(ch, posStart);
+		if (posStop>=0 && posStop>=posStart)
+			value = json.substr(posStart, posStop-posStart);
+		else
+			value = json.substr(posStart, json.length());
+		retList.push_back(value);
+		posStart = posStop+cellSize;
+	} while (posStop>0);
+
+	return (int)retList.size();
+}
+

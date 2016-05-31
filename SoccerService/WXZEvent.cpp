@@ -5,7 +5,7 @@
 Event::Event()
 {
 	id_ = 0;
-	name_ = "";
+	name_ = L"";
 }
 
 Event::~Event()

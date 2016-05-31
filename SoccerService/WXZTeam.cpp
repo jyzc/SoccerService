@@ -5,7 +5,7 @@
 Team::Team()
 {
 	id_ = 0;
-	name_ = "";
+	name_ = L"";
 }
 
 Team::~Team()

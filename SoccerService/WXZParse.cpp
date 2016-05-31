@@ -2,6 +2,7 @@
 #include "WXZParse.h"
 #include "WXZMatch.h"
 
+#include "ParseFileBfdata.h"
 
 
 Parse::Parse()
@@ -26,8 +27,8 @@ void Parse::parseMatchList(const wstring matchRecord, vector<Match*>& matchList)
 	}
 	matchList.clear();
 
-
-
+	ParseFileBfdata parseFileBfdata;
+	parseFileBfdata.parseMatchList(matchRecord, matchList);
 }
 
 void Parse::parseMatchRecord(const wstring matchRecord, Match* matchList)
