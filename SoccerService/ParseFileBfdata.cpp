@@ -38,12 +38,14 @@ void ParseFileBfdata::parseMatchList(const wstring & matchRecord, vector<Match*>
 			}
 			else if (lineNum>=6 && matchCount>0 && lineNum<(matchCount+6))
 			{
-				if (lineNum == matchCount+4)
-				{
-					int m=0;
-				}
+				//A[0]
 				Match* match = getMatch(line);
 				matchList.push_back(match);
+			}
+			else
+			{
+				//B[0],C[0]
+
 			}
 			posStart = posStop+1;
 			lineNum++;
@@ -109,7 +111,15 @@ Match* ParseFileBfdata::getMatch(const wstring & str)
  		match->setHomeScoreHarf(wbs_to_b(valList[16]));//主队上半进球
  		match->setGuestScoreHarf(wbs_to_b(valList[17]));//客队上半进球
 		match->setStatus(wbs_to_i(valList[13]));//比赛状态
-// 		match->setResult(valList[]);
+		if (match->status() == -1)
+		{
+			if (match->homeScore() > match->guestScore())
+				match->setResult(3);
+			else if (match->homeScore() < match->guestScore())
+				match->setResult(0);
+			else
+				match->setResult(1);
+		}
 
 		return match;
 	}
@@ -129,7 +139,6 @@ time_t ParseFileBfdata::getMatchDate(const wstring & year, const wstring & month
 time_t ParseFileBfdata::convert_string_to_time_t(const std::string & time_string)  
 {  
 	struct tm tm1;  
-// 	time_t time1;  
 	int i = sscanf(time_string.c_str(), "%d-%d-%d %d:%d:%d" ,       
 		&(tm1.tm_year),   
 		&(tm1.tm_mon),   
@@ -144,7 +153,5 @@ time_t ParseFileBfdata::convert_string_to_time_t(const std::string & time_string
 	tm1.tm_mon --;  
 	tm1.tm_isdst=-1;  
 
-// 	time1 = mktime(&tm1);  
-// 	return time1;  
 	return mktime(&tm1);
 }  

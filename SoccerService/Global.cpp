@@ -9,24 +9,48 @@
 #pragma comment(lib, "..\\Debug\\MatchAlgorithm.lib")
 
 //////////////////////////////////////////////////////////////////////////
-void compareList(const vector<Match*> matchList, const vector<Match*> todayList, vector<Match*>& updateList)
-{
+Match* findMatch(long findId, vector<Match*> todayList)
+{	
+	for (int i=0; i<(int)todayList.size(); i++)
+	{
+		if (todayList[i]->id()==findId)
+			return todayList[i];
+	}
+	return 0;
+}
 
+void compareList(vector<Match*> & matchList, const vector<Match*> & todayList,  vector<Match*>& updateList)
+{
+	for (int i=0; i<(int)matchList.size(); i++)
+	{
+		Match* match = matchList[i];
+		Match* matchDB = findMatch(match->id(), todayList);
+		if (matchDB)
+		{
+			if (match->status() != matchDB->status())
+			{
+				updateList.push_back(match);
+				matchList.erase(matchList.begin()+i);
+				i--;
+			}
+		}
+		else
+		{
+			updateList.push_back(match);
+			matchList.erase(matchList.begin()+i);
+			i--;
+		}
+	}
 }
 
 void releaseVector(vector<Match*> & matchList)
 {
-	for (int i=0; i<(int)matchList.size(); i++)
+	vector<Match*>::iterator iter;
+	for (iter=matchList.begin(); iter!=matchList.end(); iter++)
 	{
-		delete matchList[i];
+ 		delete *iter;
 	}
 	matchList.clear();
-
-// 	vector<Match*>::iterator iter;
-// 	for (iter=matchList.begin(); iter!=matchList.end(); ++iter)
-// 	{
-// 	}
-
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -94,7 +118,6 @@ void  Global::scanTodayThread()
 		//请求网络，获得比赛列表matchList
 		netRequest.getMatchList(matchList);
 
-
 		//读取数据库，获得当天比赛列表todayList
 		DBOperator dbOperator;
 		pthread_mutex_lock(&dbMutex_);
@@ -103,6 +126,8 @@ void  Global::scanTodayThread()
 
 		//比较获得updateList，
 		compareList(matchList, todayList, updateList);
+		releaseVector(todayList);
+		releaseVector(matchList);
 
 		//请求网页信息
 		for (int i=0; i<(int)updateList.size(); i++)
@@ -121,8 +146,6 @@ void  Global::scanTodayThread()
 		dbOperator.updateData(updateList);
 		pthread_mutex_unlock(&dbMutex_);
 
-		releaseVector(matchList);
-		releaseVector(todayList);
 		releaseVector(updateList);
 		Sleep(1000);
 	}//end while (scanTodayThreadTerminate_)
