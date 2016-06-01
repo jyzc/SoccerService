@@ -6,20 +6,23 @@ Team::Team()
 {
 	id_ = 0;
 	name_ = L"";
+	leagueData_ = 0;
 }
 
 Team::~Team()
 {
+	if (leagueData_)
+		delete leagueData_;
 
 }
 
 //////////////////////////////////////////////////////////////////////////
 
-TeamData::TeamData()
+LeagueData::LeagueData()
 {
 }
 
-TeamData::~TeamData()
+LeagueData::~LeagueData()
 {
 
 }

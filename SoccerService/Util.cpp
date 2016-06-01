@@ -112,6 +112,15 @@ int wbs_to_i(std::wstring val)
 	ss>>s;
 	return s;
 }
+BYTE wbs_to_b(std::wstring val)
+{
+	std::wstringstream ss;
+	unsigned short s;
+	ss<<val;
+	ss>>s;
+	return (BYTE)s;
+}
+
 
 
 std::string Utf8ToAnsi(string & utf8)

@@ -6,6 +6,7 @@
 
 using namespace std;
 
+
 class Global
 {
 public:

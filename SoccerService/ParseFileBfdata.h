@@ -10,10 +10,13 @@ public:
 	ParseFileBfdata();
 	~ParseFileBfdata();
 
-	void parseMatchList(const wstring matchRecord, vector<Match*>& matchList);
+	void parseMatchList(const wstring & matchRecord, vector<Match*>& matchList);
 private:
-	int getMatchCount(wstring str);
-	Match* getMatch(wstring str);
+	int getMatchCount(const wstring & str);
+	Match* getMatch(const wstring & str);
+ 	time_t getMatchDate(const wstring & year, const wstring & monthDay, const wstring & hourMinute);
+
+	time_t convert_string_to_time_t(const std::string & time_string);  
 
 };
 

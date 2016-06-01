@@ -3,16 +3,28 @@
 #pragma once
 #include <vector>
 
+//wstringתstring
 std::string wcs_to_mbs(std::wstring const& str, std::locale const& loc);
+//stringתwstring
 std::wstring mbs_to_wcs(std::string const& str, std::locale loc);
-
+//utf8תwstring
 std::wstring utf8_to_wcs(const string & str, std::locale loc);
 
-
+//longתwstring
 std::wstring l_to_wcs(long val);
+//longתstring
 std::string l_to_mbs(long val);
+//wstringתlong
 long wbs_to_l(std::wstring val);
+//stringתlong
+long mbs_to_l(std::string val);
+
+
+//wstringתint
 int wbs_to_i(std::wstring val);
+//wtringתBYTE
+BYTE wbs_to_b(std::wstring val);
+
 
 std::string Utf8ToAnsi(string & utf8);
 std::wstring MBytesToWString(const char* lpcszString);

@@ -13,8 +13,12 @@ class Match
 {
 public:
 	enum MatchStatus{
-		IDLE=0,
-		BEGIN=1
+		DELAY=-14,
+		INTERRUPTION=-12,//interruption 
+		NOSTART=0,
+		FIRSTHARF=1,
+		HARFTIME=2,
+		SECONDHARF=3
 	};
 
 public:
@@ -29,8 +33,8 @@ public:
 	const time_t & date() {return date_;}
 	void setResult(const BYTE & result) {result_ = result;}
 	const BYTE & result() {return result_;}
-	void setStatus(const MatchStatus & status) {status_ = status;}
-	const MatchStatus & status() {return status_;}	
+	void setStatus(const int & status) {status_ = status;}
+	const int & status() {return status_;}	
 	void setHomeScore(const BYTE & homeScore) {homeScore_ = homeScore;}
 	const BYTE & homeScore() {return homeScore_;}	
 	void setGuestScore(const BYTE & guestScore) {guestScore_ = guestScore;}
@@ -50,8 +54,8 @@ public:
 private:
 	long id_;				//比赛ID
 	time_t date_;			//比赛时间
-	BYTE result_;			//比赛结果 0，1，3
-	MatchStatus status_;	//比赛状态	
+	BYTE result_;			//比赛结果 -14推迟,-12腰斩,-11,-10;-1完成; 0未开赛; 1上半场;2中场;3下半场;
+	int status_;	//比赛状态	
 	BYTE homeScore_;		//主队进球
 	BYTE guestScore_;		//客队进球
 	BYTE homeScoreHarf_;	//主队上半进球

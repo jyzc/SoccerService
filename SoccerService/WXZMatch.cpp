@@ -9,7 +9,7 @@ Match::Match()
 	id_ = 0;
 	date_ = 0;
 	result_ = 0;
-	status_= IDLE;
+	status_= 0;
 	homeScore_ = 0;
 	guestScore_ = 0;
 	homeScoreHarf_ = 0;

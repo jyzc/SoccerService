@@ -36,7 +36,7 @@ void NetRequest::getMatchList(vector<Match*>& matchList)
 	request.append(L"Connection: keep-alive\r\n");
 
 	http_->doGet(request, response);
-#ifdef _DEBUG
+#if 0
 	wcout.imbue(locale(""));
 	wcout<<L"\n"<<response<<endl;
 #endif

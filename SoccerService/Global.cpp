@@ -14,6 +14,20 @@ void compareList(const vector<Match*> matchList, const vector<Match*> todayList,
 
 }
 
+void releaseVector(vector<Match*> & matchList)
+{
+	for (int i=0; i<(int)matchList.size(); i++)
+	{
+		delete matchList[i];
+	}
+	matchList.clear();
+
+// 	vector<Match*>::iterator iter;
+// 	for (iter=matchList.begin(); iter!=matchList.end(); ++iter)
+// 	{
+// 	}
+
+}
 
 //////////////////////////////////////////////////////////////////////////
 Global::Global()
@@ -73,11 +87,11 @@ void* Global::scanTodayThreadStatic(void*  arg)
 
 void  Global::scanTodayThread()
 {
+	vector<Match*> matchList, todayList, updateList;
+	NetRequest netRequest;
 	while (!scanTodayThreadTerminate_)
 	{
 		//请求网络，获得比赛列表matchList
-		NetRequest netRequest;
-		vector<Match*> matchList, todayList, updateList;
 		netRequest.getMatchList(matchList);
 
 
@@ -107,8 +121,15 @@ void  Global::scanTodayThread()
 		dbOperator.updateData(updateList);
 		pthread_mutex_unlock(&dbMutex_);
 
+		releaseVector(matchList);
+		releaseVector(todayList);
+		releaseVector(updateList);
 		Sleep(1000);
-	}//end while (scanTodayThreadTerminate_)	
+	}//end while (scanTodayThreadTerminate_)
+
+	releaseVector(matchList);
+	releaseVector(todayList);
+	releaseVector(updateList);
 }
 
 void* Global::scanOverThreadStatic(void* arg)
