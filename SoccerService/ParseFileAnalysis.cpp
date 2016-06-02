@@ -21,40 +21,40 @@ void ParseFileAnalysis::parseMatchRecord(const wstring matchRecord, Match* match
 	vector<Match*> jiaoFeng,jiaoFengSame, homeRecord, homeRecordSame, guestRecord, guestRecordSame;
 	// 交锋
 	posStart = matchRecord.find(L"v_data=[", posStart);
-	posStop = matchRecord.find(L"]];", posStart);
+	posStop = matchRecord.find(L"];", posStart);
 	if (posStop>=0 && posStop>posStart)
 	{
-		line = matchRecord.substr(posStart+8, posStop-posStart-7);
+		line = matchRecord.substr(posStart+8, posStop-posStart-8);
 		getJiaoFengRecord(line, jiaoFeng, jiaoFengSame, matchList->homeTeam()->id(), matchList->guestTeam()->id());
 		posStart = posStop;
 	}
 
 	//主队
 	posStart = matchRecord.find(L"h_data=[", posStart);
-	posStop = matchRecord.find(L"]];", posStart);
+	posStop = matchRecord.find(L"];", posStart);
 	if (posStop>=0 && posStop>posStart)
 	{
-		line = matchRecord.substr(posStart+8, posStop-posStart-7);
+		line = matchRecord.substr(posStart+8, posStop-posStart-8);
 		getRecords(line, homeRecord);
 		posStart = posStop;
 	}
 
 	//客队
 	posStart = matchRecord.find(L"a_data=[", posStart);
-	posStop = matchRecord.find(L"]];", posStart);
+	posStop = matchRecord.find(L"];", posStart);
 	if (posStop>=0 && posStop>posStart)
 	{
-		line = matchRecord.substr(posStart+8, posStop-posStart-7);
+		line = matchRecord.substr(posStart+8, posStop-posStart-8);
 		getRecords(line, homeRecord);
 		posStart = posStop;
 	}
 
 	//主队主场
 	posStart = matchRecord.find(L"h2_data=[", posStart);
-	posStop = matchRecord.find(L"]];", posStart);
+	posStop = matchRecord.find(L"];", posStart);
 	if (posStop>=0 && posStop>posStart)
 	{
-		line = matchRecord.substr(posStart+9, posStop-posStart-8);
+		line = matchRecord.substr(posStart+9, posStop-posStart-9);
 		getRecords(line, homeRecordSame);
 		posStart = posStop;
 	}
@@ -62,10 +62,10 @@ void ParseFileAnalysis::parseMatchRecord(const wstring matchRecord, Match* match
 
 	//客队客场
 	posStart = matchRecord.find(L"a2_data=[", posStart);
-	posStop = matchRecord.find(L"]];", posStart);
+	posStop = matchRecord.find(L"];", posStart);
 	if (posStop>=0 && posStop>posStart)
 	{
-		line = matchRecord.substr(posStart+9, posStop-posStart-8);
+		line = matchRecord.substr(posStart+9, posStop-posStart-9);
 		getRecords(line, homeRecordSame);
 	}
 
@@ -94,6 +94,9 @@ Match* ParseFileAnalysis::getRecord(const wstring matchRecord)
 	'8',
 	'10'],
 	*/
+	if (matchRecord.size()<=0)
+		return 0;
+
 	int posStart=0, posStop=0;
 	wstring line = L"";
 
@@ -112,14 +115,23 @@ Match* ParseFileAnalysis::getRecord(const wstring matchRecord)
 
 		Match* match = new Match();
 
-
+		return match;
 	}
 	return 0;
 }
 void ParseFileAnalysis::getRecords(const wstring matchRecord, vector<Match*>& homeRecord)
 {
+	if (matchRecord.size()<=0)
+		return;
+
 	vector<wstring> recordList;
-	split(matchRecord, L",", recordList);
+	split(matchRecord, L"],", recordList);
+
+	for (int i=0; i<(int)recordList.size(); i++)
+	{
+		Match* match = getRecord(recordList[i]);
+		homeRecord.push_back(match);
+	}
 }
 
 
@@ -128,8 +140,18 @@ void ParseFileAnalysis::getRecords(const wstring matchRecord, vector<Match*>& ho
 void ParseFileAnalysis::getJiaoFengRecord(const wstring matchRecord, vector<Match*>& jiaoFeng, vector<Match*> &jiaoFengSame, long homeId, long guestId)
 {
 	//['15-08-29',25,'日職聯','#009900',203,'<span title="排名：11">神户胜利船</span>',3164,'<span title="排名：12">鸟栖沙根</span>',7,1,'2-1','平/半',-1,-1,1,1096786,'8','10'],
-
-
+	if (matchRecord.size()<=0)
+		return;
+	getRecords(matchRecord, jiaoFeng);
+	for (int i=0; i<(int)jiaoFeng.size(); i++)
+	{
+		Match* match = jiaoFeng[i];
+		if (match->homeTeam()->id() == homeId && match->guestTeam()->id() == guestId)
+		{
+			Match* matchSame = new Match(*match);
+			jiaoFengSame.push_back(matchSame);
+		}
+	}
 }
 
 // void ParseFileAnalysis::getHomeRecord(const wstring matchRecord, vector<Match*>& homeRecord)

@@ -20,6 +20,22 @@ Match::Match()
 	event_ = 0;
 }
 
+Match::Match(const Match & rhs)
+{
+	id_ = rhs.id_;
+	date_ = rhs.date_;
+	result_ = rhs.result_;
+	status_ = rhs.status_;
+	homeScore_ = rhs.homeScore_;
+	guestScore_ = rhs.guestScore_;
+	homeScoreHarf_ = rhs.homeScoreHarf_;
+	guestScoreHarf_ = rhs.guestScoreHarf_;
+
+	homeTeam_ = new Team(*rhs.homeTeam_);
+	guestTeam_ = new Team(*rhs.guestTeam_);
+	event_ = new Event(*rhs.event_);
+}
+
 Match::~Match()
 {
 	if (homeTeam_)

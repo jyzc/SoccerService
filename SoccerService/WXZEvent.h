@@ -7,8 +7,8 @@ class Event
 {
 public:
 	Event();
+	Event(const Event & rhs);
 	~Event();
-
 
 	void setId(const long & id) {id_ = id;}
 	const long & id() {return id_;}	

@@ -8,6 +8,12 @@ Event::Event()
 	name_ = L"";
 }
 
+Event::	Event(const Event & rhs)
+{
+	id_ = rhs.id_;
+	name_ = rhs.name_;
+}
+
 Event::~Event()
 {
 

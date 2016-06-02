@@ -54,6 +54,7 @@ class Team
 {
 public:
 	Team();
+	Team(const Team & rhs);
 	~Team();
 
 	void setId(const long & id) {id_ = id;}

@@ -24,6 +24,7 @@ public:
 
 public:
 	Match();
+	Match(const Match & rhs);
 	~Match();
 
 	bool checkMatch();
