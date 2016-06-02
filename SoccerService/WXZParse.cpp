@@ -3,7 +3,7 @@
 #include "WXZMatch.h"
 
 #include "ParseFileBfdata.h"
-
+#include "ParseFileAnalysis.h"
 
 Parse::Parse()
 {
@@ -36,4 +36,6 @@ void Parse::parseMatchRecord(const wstring matchRecord, Match* matchList)
 	if (matchRecord==L"" || matchList==0)
 		return;
 
+	ParseFileAnalysis parseFileAnalysis;
+	parseFileAnalysis.parseMatchRecord(matchRecord, matchList);
 }

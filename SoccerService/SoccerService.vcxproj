@@ -81,6 +81,7 @@
   <ItemGroup>
     <ClInclude Include="Global.h" />
     <ClInclude Include="MysqlOperator.h" />
+    <ClInclude Include="ParseFileAnalysis.h" />
     <ClInclude Include="ParseFileBfdata.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -99,6 +100,7 @@
   <ItemGroup>
     <ClCompile Include="Global.cpp" />
     <ClCompile Include="MysqlOperator.cpp" />
+    <ClCompile Include="ParseFileAnalysis.cpp" />
     <ClCompile Include="ParseFileBfdata.cpp" />
     <ClCompile Include="SoccerService.cpp" />
     <ClCompile Include="stdafx.cpp">

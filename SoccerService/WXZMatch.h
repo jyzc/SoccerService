@@ -3,7 +3,8 @@
 #pragma once
 
 #include <time.h>		/*time_t*/
-
+#include <vector>
+using namespace std;
 
 class Team;
 class Event;
@@ -51,6 +52,21 @@ public:
 	void setEvent(Event* event) {event_ = event;}
 	Event* event() const {return event_;}
 
+
+	void setJiaoFengRecord(vector<Match*> & jiaoFengRecord);
+	vector<Match*> jiaoFengRecord(){return jiaoFengRecord_;}
+	void setJiaoFengRecordSame(vector<Match*> & jiaoFengRecordSame);
+	vector<Match*> jiaoFengRecordSame(){return jiaoFengRecordSame_;}
+
+	void setHomeRecord(vector<Match*> & homeRecord);
+	vector<Match*> homeRecord(){return homeRecord_;}
+	void setHomeRecordSame(vector<Match*> & homeRecordSame);
+	vector<Match*> homeRecordSame(){return homeRecordSame_;}
+	void setGuestRecord(vector<Match*> & guestRecord);
+	vector<Match*> guestRecord(){return guestRecord_;}
+	void setGuestRecordSame(vector<Match*> & guestRecordSame);
+	vector<Match*> guestRecordSame(){return guestRecordSame_;}
+
 private:
 	long id_;				//比赛ID
 	time_t date_;			//比赛时间
@@ -65,6 +81,12 @@ private:
 	Team* guestTeam_;		//客队
 	Event* event_;			//赛事
 
+	vector<Match*> jiaoFengRecord_;			//交锋记录
+	vector<Match*> jiaoFengRecordSame_;		//主客相同交锋记录
+	vector<Match*> homeRecord_;				//主队记录
+	vector<Match*> homeRecordSame_;			//主队主场记录
+	vector<Match*> guestRecord_;			//客队记录
+	vector<Match*> guestRecordSame_;		//客队客场记录
 };
 
 #endif 	//_MATCH_H__

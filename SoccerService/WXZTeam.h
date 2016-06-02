@@ -42,6 +42,12 @@ private:
 	time_t	ttNow_;		//当前时间
 };
 
+class TeamRecord
+{
+	TeamRecord();
+	~TeamRecord();
+
+};
 
 //球队类
 class Team

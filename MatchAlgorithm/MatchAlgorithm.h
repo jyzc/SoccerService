@@ -4,7 +4,7 @@
 
 //如果定义了C++编译器，那么声明为C链接方式
 #ifdef __cplusplus
-extern "C" {
+extern "C++" {
 #endif
 
 

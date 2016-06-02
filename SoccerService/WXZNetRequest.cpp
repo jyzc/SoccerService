@@ -4,7 +4,7 @@
 #include <time.h>			/*time()*/
 #include "Util.h"			/*l_to_wcs*/
 #include "WXZParse.h"
-
+#include "WXZMatch.h"
 
 NetRequest::NetRequest()
 {
@@ -14,7 +14,10 @@ NetRequest::NetRequest()
 NetRequest::~NetRequest()
 {
 	if (http_)
+	{
+		http_->uninit();
 		delete http_;
+	}
 }
 
 //获得比赛基本信息matchList
@@ -50,5 +53,22 @@ void NetRequest::getMatchData(Match* matchList)
 {
 	if (!http_->isInit())
 		http_->init();
+
+	http_->setHostName(L"zq.win007.com");
+	wstring s=L"/analysis/"+l_to_wcs(matchList->id())+L"sb.htm";	
+	http_->setPath(s);
+
+	wstring request,response;
+	request.append(L"Referer: http://live3.win007.com/\r\n");
+	request.append(L"Connection: keep-alive\r\n");
+
+	http_->doGet(request, response, true);
+#if 0
+	wcout.imbue(locale(""));
+	wcout<<L"\n"<<response<<endl;
+#endif
+
+	Parse parse;
+ 	parse.parseMatchRecord(response, matchList);
 
 }
