@@ -15,20 +15,23 @@ std::wstring l_to_wcs(long val);
 //longתstring
 std::string l_to_mbs(long val);
 //wstringתlong
-long wbs_to_l(std::wstring val);
+long wcs_to_l(std::wstring val);
 //stringתlong
 long mbs_to_l(std::string val);
 
 
 //wstringתint
-int wbs_to_i(std::wstring val);
+int wcs_to_i(std::wstring val);
 //wtringתBYTE
-BYTE wbs_to_b(std::wstring val);
+BYTE wcs_to_b(std::wstring val);
 
 
-std::string Utf8ToAnsi(string & utf8);
+std::string utf8_to_ansi(string & utf8);
 std::wstring MBytesToWString(const char* lpcszString);
 
 int split(const wstring json, const wstring ch, vector<wstring>& retList);
+
+time_t convert_string_to_time_t(const std::string & time_string);  
+wstring removeChar(wstring & removeStr, wchar_t ch);
 
 #endif	//_UTIL_H__

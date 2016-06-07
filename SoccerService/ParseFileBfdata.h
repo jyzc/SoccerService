@@ -15,9 +15,6 @@ private:
 	int getMatchCount(const wstring & str);
 	Match* getMatch(const wstring & str);
  	time_t getMatchDate(const wstring & year, const wstring & monthDay, const wstring & hourMinute);
-
-	time_t convert_string_to_time_t(const std::string & time_string);  
-
 };
 
 

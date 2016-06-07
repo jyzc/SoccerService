@@ -1,7 +1,11 @@
 #include "StdAfx.h"
 #include "Util.h"
 #include <sstream>		/*wstringstream*/
+#include <locale>
+#include <codecvt>
+#include <iostream>
 
+#pragma warning(disable:4996) 
 
 //////////////////////////////////////////////////////////////////////////
 char gMatchStatus[5][20] = {"完","中","推迟","待定","腰斩"};
@@ -40,9 +44,6 @@ std::wstring mbs_to_wcs(std::string const& str, std::locale loc)
 	return std::wstring(&buf[0]);
 }
 
-#include <locale>
-#include <codecvt>
-#include <iostream>
 std::wstring utf8_to_wcs(const string & str, std::locale loc)
 {
 	int iLenByWChNeed = MultiByteToWideChar(CP_UTF8, 0, str.c_str(), str.size(), NULL, 0);
@@ -83,8 +84,6 @@ std::wstring l_to_wcs(long val)
 	wstring s;
 	ss<<val;
 	ss>>s;
-// 	if (! ss.good())
-// 		return L"";
 	return s;
 }
 std::string l_to_mbs(long val)
@@ -96,7 +95,7 @@ std::string l_to_mbs(long val)
 	return s;
 }
 
-long wbs_to_l(std::wstring val)
+long wcs_to_l(std::wstring val)
 {
 	std::wstringstream ss;
 	long s;
@@ -104,7 +103,7 @@ long wbs_to_l(std::wstring val)
 	ss>>s;
 	return s;
 }
-int wbs_to_i(std::wstring val)
+int wcs_to_i(std::wstring val)
 {
 	std::wstringstream ss;
 	int s;
@@ -112,7 +111,7 @@ int wbs_to_i(std::wstring val)
 	ss>>s;
 	return s;
 }
-BYTE wbs_to_b(std::wstring val)
+BYTE wcs_to_b(std::wstring val)
 {
 	std::wstringstream ss;
 	unsigned short s;
@@ -123,7 +122,7 @@ BYTE wbs_to_b(std::wstring val)
 
 
 
-std::string Utf8ToAnsi(string & utf8)
+std::string utf8_to_ansi(string & utf8)
 {
 	if (utf8=="")
 		return "";
@@ -204,3 +203,37 @@ int split(const wstring json, const wstring ch, vector<wstring>& retList)
 	return (int)retList.size();
 }
 
+time_t convert_string_to_time_t(const std::string & time_string)  
+{  
+	struct tm tm1;  
+	int i = sscanf(time_string.c_str(), "%d-%d-%d %d:%d:%d" ,       
+		&(tm1.tm_year),   
+		&(tm1.tm_mon),   
+		&(tm1.tm_mday),  
+		&(tm1.tm_hour),  
+		&(tm1.tm_min),  
+		&(tm1.tm_sec),  
+		&(tm1.tm_wday),  
+		&(tm1.tm_yday));  
+
+	tm1.tm_year -= 1900;  
+	tm1.tm_mon --;  
+	tm1.tm_isdst=-1;  
+
+	return mktime(&tm1);
+}  
+
+wstring removeChar(wstring & removeStr, wchar_t ch)
+{
+	if (removeStr.size()<=0)
+		return L"";
+	for (int i=0; i<(int)removeStr.size(); i++)
+	{
+		if (removeStr[i] == ch)
+		{
+			removeStr.erase(i, 1);
+			i--;
+		}
+	}
+	return removeStr;
+}
