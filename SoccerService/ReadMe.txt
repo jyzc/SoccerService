@@ -18,9 +18,39 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
+1、mysql环境变量
+MYSQL_HOME=D:\Tools\mysql-5.7.12-winx64
+PATH=.;%MYSQL_HOME%\bin;
 
 
+2、用管理员身份打开cmd
+//声明配置文件
+mysqld install MySQL --defaults-file="D:\Tools\mysql-5.7.12-winx64\my.ini"
+//安装mysql
+mysqld -install
 
+//初始化数据库
+mysqld  --initialize-insecure
+//启动服务
+net start mysql
+-----------------------------------------
+mysql -u root -p
+
+>show databases;
+>use mysql;
+//修改root默认密码为123456
+>ALTER USER 'root'@'localhost' IDENTIFIED BY '123456';
+>FLUSH PRIVILEGES;
+>QUIT
+-----------------------------------------
+//设置远程登录
+>GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '123456' WITH GRANT OPTION;
+
+------------------------------------------
+mysqld remove
+net start mysql
+net stop mysql
+mysql -u root -p
 
 
 
