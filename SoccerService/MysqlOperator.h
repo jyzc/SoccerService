@@ -4,7 +4,6 @@
 
 #include <map>
 #include "mysql_connection.h"  
-// #pragma warning(disable:4251) 
 #include <cppconn/resultset.h>  
 using namespace std;  
 
@@ -12,9 +11,9 @@ class mysql_database
 {
 public:
 	mysql_database();
+	mysql_database(map<string,string> &conf);
 	~mysql_database();
 
-	mysql_database(map<string,string> &conf);
 	sql::Connection* db_connect(string database = "");
 
 	int get_total(sql::ResultSet *result)  ;

@@ -10,9 +10,9 @@ std::wstring mbs_to_wcs(std::string const& str, std::locale loc);
 //utf8תwstring
 std::wstring utf8_to_wcs(const string & str, std::locale loc);
 
-//longתwstring
+//long -> wstring
 std::wstring l_to_wcs(long val);
-//longתstring
+//long -> string
 std::string l_to_mbs(long val);
 //wstringתlong
 long wcs_to_l(std::wstring val);

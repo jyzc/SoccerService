@@ -30,12 +30,12 @@ driver(NULL),con(NULL),stmt(NULL),result(NULL)
 	db_charset = conf["db_charset"];  
 }  
 
-
+//////////////////////////////////////////////////////////////////////////
 sql::Connection* mysql_database::db_connect(string database)
 {
 	try{  
 		string db;  
-		db=(database=="")?db_name:database;  
+		db = (database=="") ? db_name:database;  
 		driver = get_driver_instance();  
 		//cout<<db_host<<db_port<<db_user<<db_passwd<<db_name<<endl;  
 		con = driver->connect("tcp://"+db_host+":"+db_port, db_user, db_passwd);  

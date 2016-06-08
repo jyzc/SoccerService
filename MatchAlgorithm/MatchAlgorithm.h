@@ -8,6 +8,7 @@ extern "C++" {
 #endif
 
 
+#define _MATCH_ALGORITHM
 
 // 通过宏来控制是导入还是导出
 #ifdef _MATCH_ALGORITHM
@@ -16,11 +17,15 @@ extern "C++" {
 #define MATCH_ALGORITHM_API __declspec(dllimport)
 #endif
 
-#include "..\\..\\SoccerService\\SoccerService\\WXZMatch.h"
 // 导出/导入函数声明
+class Match;
+// class MatchParameter;
 
 MATCH_ALGORITHM_API void CalculateH(Match* match);
+// MATCH_ALGORITHM_API void CalculateZG(Match* match);
 
+MATCH_ALGORITHM_API void calculate(Match* match);
+MATCH_ALGORITHM_API void calculateBaseData(Match* match);
 
 
 

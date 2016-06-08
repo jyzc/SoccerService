@@ -16,12 +16,13 @@ public:
 	//获得比赛基本信息matchList
 	void getMatchList(vector<Match*>& matchList);
 	//获得比赛对战数据
-	void getMatchData(Match* matchList);
+	bool getMatchData(Match* matchList);
 protected:
 private:
 	void setHttp(Http* http){ http_ = http;}
 
 	Http* http_;
+// 	int requestCount_;//请求次数
 };
 
 

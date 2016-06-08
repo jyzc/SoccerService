@@ -2,6 +2,8 @@
 #include "WXZDBOperator.h"
 #include "MysqlOperator.h"
 
+// #pragma warning(disable:4251) 
+
 DBOperator::DBOperator()
 {
 

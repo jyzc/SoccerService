@@ -26,7 +26,7 @@ void ParseFileAnalysis::parseMatchRecord(const wstring matchRecord, Match* match
 	if (posStop>=0 && posStop>posStart)
 	{
 		line = matchRecord.substr(posStart+8, posStop-posStart-8);
-		getJiaoFengRecord(line, jiaoFeng, jiaoFengSame, matchList->homeTeam()->id(), matchList->guestTeam()->id());
+		getJiaoFengRecord(line, matchList->jiaoFengRecord(), matchList->jiaoFengRecordSame(), matchList->homeTeam()->id(), matchList->guestTeam()->id());
 		posStart = posStop;
 	}
 
@@ -36,7 +36,7 @@ void ParseFileAnalysis::parseMatchRecord(const wstring matchRecord, Match* match
 	if (posStop>=0 && posStop>posStart)
 	{
 		line = matchRecord.substr(posStart+8, posStop-posStart-8);
-		getRecords(line, homeRecord);
+		getRecords(line, matchList->homeRecord());
 		posStart = posStop;
 	}
 
@@ -46,7 +46,7 @@ void ParseFileAnalysis::parseMatchRecord(const wstring matchRecord, Match* match
 	if (posStop>=0 && posStop>posStart)
 	{
 		line = matchRecord.substr(posStart+8, posStop-posStart-8);
-		getRecords(line, homeRecord);
+		getRecords(line, matchList->guestRecord());
 		posStart = posStop;
 	}
 
@@ -56,7 +56,7 @@ void ParseFileAnalysis::parseMatchRecord(const wstring matchRecord, Match* match
 	if (posStop>=0 && posStop>posStart)
 	{
 		line = matchRecord.substr(posStart+9, posStop-posStart-9);
-		getRecords(line, homeRecordSame);
+		getRecords(line, matchList->homeRecordSame());
 		posStart = posStop;
 	}
 
@@ -67,7 +67,7 @@ void ParseFileAnalysis::parseMatchRecord(const wstring matchRecord, Match* match
 	if (posStop>=0 && posStop>posStart)
 	{
 		line = matchRecord.substr(posStart+9, posStop-posStart-9);
-		getRecords(line, homeRecordSame);
+		getRecords(line, matchList->guestRecordSame());
 		posStart = posStop;
 	}
 
@@ -86,10 +86,21 @@ void ParseFileAnalysis::parseMatchRecord(const wstring matchRecord, Match* match
 	if (posStop>=0 && posStop>posStart)
 	{
 		line = matchRecord.substr(posStart, posStop-posStart+5);
-
+		getLeagueData(line, matchList->homeTeam());
 		posStart = posStop;
 	}
-
+	//客队联赛积分
+	posStart = matchRecord.find(L"全场", posStart);
+	if (posStart<0)
+		return;
+	posStart = matchRecord.find(L"<tr", posStart);
+	posStop = matchRecord.find(L"</tr>", posStart);
+	if (posStop>=0 && posStop>posStart)
+	{
+		line = matchRecord.substr(posStart, posStop-posStart+5);
+		getLeagueData(line, matchList->guestTeam());
+		posStart = posStop;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -130,7 +141,7 @@ Match* ParseFileAnalysis::getRecord(const wstring matchRecord)
 		posStop = len-1;
 	line = matchRecord.substr(posStart, posStop-posStart+1);
 
-#if 1
+#if 0
 	wcout.imbue(locale(""));
 	wcout<<L"\n"<<line<<endl;
 #endif
@@ -204,7 +215,7 @@ time_t ParseFileAnalysis::getTime(const wstring value)
 	//'15-08-29'
 	if (value.size()<=0)
 		return 0;
-	wstring s = value + L" 00:00:00";
+	wstring s = L"20" + value + L" 00:00:00";
 	return convert_string_to_time_t(wcs_to_mbs(s, locale("")));
 }
 
@@ -267,7 +278,70 @@ void ParseFileAnalysis::getHarfScore(const wstring value, BYTE& homeScore, BYTE&
 	}
 }
 
+void ParseFileAnalysis::getLeagueData(const wstring matchRecord, Team* team)
+{
+	/*
+	<tr align=middle bgcolor=#FFECEC> //0-
+	<td height=20 bgcolor=#FFFFFF>总</td>
+	<td bgcolor=#FFFFFF>&nbsp;</td>//2-已赛场次
+	<td bgcolor=#FFFFFF>&nbsp;</td>//3-胜
+	<td bgcolor=#FFFFFF>&nbsp;</td>//4-平
+	<td bgcolor=#FFFFFF>&nbsp;</td>//5-负
+	<td bgcolor=#FFFFFF>&nbsp;</td>//6-得
+	<td bgcolor=#FFFFFF>&nbsp;</td>//7-失
+	<td bgcolor=#FFFFFF>&nbsp;</td>//8净
+	<td bgcolor=#FFFFFF class=red>&nbsp;</td>//9-积分
+	<td bgcolor=#FFFFFF class=blue>&nbsp;</td>//10-排名
+	<td bgcolor=#FFFFFF class=red>&nbsp;</td>//11-胜率
+	</tr>//12
+	*/
+	if (matchRecord.size()<=0 || team==0)
+		return;
+	vector<wstring> lineList;
+	split(matchRecord, L"\n", lineList);
 
+	LeagueData* leagueData = new LeagueData;
+	leagueData->setJiFen(wcs_to_i(getTdValue(lineList[9])));
+	leagueData->setPaiHang(wcs_to_i(getTdValue(lineList[10])));
+	leagueData->setFinishNum(wcs_to_i(getTdValue(lineList[2])));
+	leagueData->setShengNum(wcs_to_i(getTdValue(lineList[3])));
+	leagueData->setPingNum(wcs_to_i(getTdValue(lineList[4])));
+	leagueData->setFuNum(wcs_to_i(getTdValue(lineList[5])));
+	leagueData->setJinQiu(wcs_to_i(getTdValue(lineList[6])));
+	leagueData->setShiQiu(wcs_to_i(getTdValue(lineList[7])));
+
+	team->setLeagueData(leagueData);
+}
+
+wstring  ParseFileAnalysis::getTdValue(const wstring tdValue)
+{
+	//<td bgcolor=#FFFFFF>&nbsp;</td>
+	if (tdValue.size()<=0)
+		return L"";
+
+	wstring line = tdValue;
+	//去回车字符 13
+	int len = line.size();
+	if (line[len-1] == 13)
+		line.erase(len-1, 1);
+
+	int posStart=0, posStop=0;
+	posStart = line.find(L"<td");
+	posStop = line.find(L">");
+	if (posStart>=0 && posStop>=0 && posStop>posStart)
+		line.erase(posStart, posStop-posStart+1);
+
+	posStart = line.find(L"</td>");
+	if (posStart>=0)
+		line.erase(posStart, 5);
+
+	//去空格 &nbsp;
+	posStart = line.find(L"&nbsp;");
+	if (posStart>=0)
+		line.erase(posStart, 6);
+
+	return line;
+}
 // void ParseFileAnalysis::getHomeRecord(const wstring matchRecord, vector<Match*>& homeRecord)
 // {
 // 

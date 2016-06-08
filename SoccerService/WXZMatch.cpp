@@ -3,6 +3,33 @@
 #include "WXZTeam.h"
 #include "WXZEvent.h"
 
+
+
+//////////////////////////////////////////////////////////////////////////
+// MatchParameter::MatchParameter()
+// {
+// 	parameterJ_ = 0;
+// 	parameterF_ = 0.0;
+// 	parameterK_ = 0.0;
+// 	parameterH_ = 0.0;
+// 	parameterD_ = 0.0;
+// 	parameterT_ = 0.0;
+// 	fullData_ = 0.0;
+// 
+// 	z1_=0;
+// 	z2_=0;
+// 	g1_=0;
+// 	g2_=0;
+// }
+// MatchParameter::~MatchParameter()
+// {
+// 
+// }
+// 
+// MatchParameter::MatchParameter(const MatchParameter & rhs)
+// {
+// 
+// }
 //////////////////////////////////////////////////////////////////////////
 Match::Match()
 {
@@ -18,6 +45,8 @@ Match::Match()
 	homeTeam_ = 0;
 	guestTeam_ = 0;
 	event_ = 0;
+	matchParameter_ = 0;
+// 	matchParameter_ = new MatchParameter();
 }
 
 Match::Match(const Match & rhs)
@@ -34,6 +63,7 @@ Match::Match(const Match & rhs)
 	homeTeam_ = new Team(*rhs.homeTeam_);
 	guestTeam_ = new Team(*rhs.guestTeam_);
 	event_ = new Event(*rhs.event_);
+//  	matchParameter_ = new MatchParameter(*rhs.matchParameter_);
 }
 
 Match::~Match()
@@ -44,6 +74,8 @@ Match::~Match()
 		delete guestTeam_;
 	if (event_)
 		delete event_;
+	if (matchParameter_)
+		delete matchParameter_;
 }
 
 //////////////////////////////////////////////////////////////////////////

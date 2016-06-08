@@ -49,7 +49,7 @@ void NetRequest::getMatchList(vector<Match*>& matchList)
 }
 
 //获得比赛对战数据
-void NetRequest::getMatchData(Match* matchList)
+bool NetRequest::getMatchData(Match* matchList)
 {
 	if (!http_->isInit())
 		http_->init();
@@ -70,5 +70,5 @@ void NetRequest::getMatchData(Match* matchList)
 
 	Parse parse;
  	parse.parseMatchRecord(response, matchList);
-
+	return true;
 }

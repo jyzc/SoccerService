@@ -9,6 +9,75 @@ using namespace std;
 class Team;
 class Event;
 
+//过滤标记
+class MatchFilter
+{
+public:
+	MatchFilter(){};
+	~MatchFilter(){};
+
+private:
+};
+
+//算法数据
+class MatchParameter
+{
+public:
+	MatchParameter()
+	{
+		parameterJ_ = 0;
+		parameterF_ = 0.0;
+		parameterK_ = 0.0;
+		parameterH_ = 0.0;
+		parameterD_ = 0.0;
+		parameterT_ = 0.0;
+		fullData_ = 0.0;
+
+		z1_=0;
+		z2_=0;
+		g1_=0;
+		g2_=0;
+	};
+// 	MatchParameter(const MatchParameter & rhs);
+	~MatchParameter(){};
+
+	const int & parameterJ() {return parameterJ_;}
+	void setParameterJ(const int & parameterJ){parameterJ_ = parameterJ;}
+	const double & parameterF() {return parameterF_;}
+	void setParameterF(const double & parameterF){parameterF_ = parameterF;}
+	const double & parameterK() {return parameterK_;}
+	void setParameterK(const double & parameterK){parameterK_ = parameterK;}
+	const double & parameterH() {return parameterH_;}
+	void setParameterH(const double & parameterH){parameterH_ = parameterH;}
+	const double & parameterD() {return parameterD_;}
+	void setParameterD(const double & parameterD){parameterD_ = parameterD;}
+	const double & parameterT() {return parameterF_;}
+	void setParameterT(const double & parameterT){parameterT_ = parameterT;}
+	const double & fullData() {return fullData_;}
+	void setFullData(const double & fullData){fullData_ = fullData;}
+
+	const double & z1() {return z1_;}
+	void setZ1(const double & z1){z1_ = z1;}
+	const double & z2() {return z2_;}
+	void setZ2(const double & z2){z2_ = z2;}
+	const double & g1() {return g1_;}
+	void setG1(const double & g1){g1_ = g1;}
+	const double & g2() {return g2_;}
+	void setG2(const double & g2){g2_ = g2;}
+
+
+private:
+	int parameterJ_;
+	double parameterF_;
+	double parameterK_;
+	double parameterH_;
+	double parameterD_;
+	double parameterT_;
+	double fullData_;
+
+	double z1_,z2_,g1_,g2_;
+};
+
 //比赛类
 class Match
 {
@@ -44,7 +113,7 @@ public:
 	void setHomeScoreHarf(const BYTE & homeScoreHarf) {homeScoreHarf_ = homeScoreHarf;}
 	const BYTE & homeScoreHarf() {return homeScoreHarf_;}	
 	void setGuestScoreHarf(const BYTE & guestScoreHarf) {guestScoreHarf_ = guestScoreHarf;}
-	const BYTE & guestScoreHarf() {guestScoreHarf_;}
+	const BYTE & guestScoreHarf() {return guestScoreHarf_;}
 
 	void setHomeTeam(Team* homeTeam) {homeTeam_ = homeTeam;}
 	Team* homeTeam() const {return homeTeam_;}
@@ -53,20 +122,23 @@ public:
 	void setEvent(Event* event) {event_ = event;}
 	Event* event() const {return event_;}
 
+	MatchParameter* matchParameter() const { return matchParameter_;}
+	void setMatchParameter(MatchParameter* matchParameter) {matchParameter_ = matchParameter;}
+
 
 	void setJiaoFengRecord(vector<Match*> & jiaoFengRecord);
-	vector<Match*> jiaoFengRecord(){return jiaoFengRecord_;}
+	vector<Match*> & jiaoFengRecord(){return jiaoFengRecord_;}
 	void setJiaoFengRecordSame(vector<Match*> & jiaoFengRecordSame);
-	vector<Match*> jiaoFengRecordSame(){return jiaoFengRecordSame_;}
+	vector<Match*> & jiaoFengRecordSame(){return jiaoFengRecordSame_;}
 
 	void setHomeRecord(vector<Match*> & homeRecord);
-	vector<Match*> homeRecord(){return homeRecord_;}
+	vector<Match*> & homeRecord(){return homeRecord_;}
 	void setHomeRecordSame(vector<Match*> & homeRecordSame);
-	vector<Match*> homeRecordSame(){return homeRecordSame_;}
+	vector<Match*> & homeRecordSame(){return homeRecordSame_;}
 	void setGuestRecord(vector<Match*> & guestRecord);
-	vector<Match*> guestRecord(){return guestRecord_;}
+	vector<Match*> & guestRecord(){return guestRecord_;}
 	void setGuestRecordSame(vector<Match*> & guestRecordSame);
-	vector<Match*> guestRecordSame(){return guestRecordSame_;}
+	vector<Match*> & guestRecordSame(){return guestRecordSame_;}
 
 private:
 	long id_;				//比赛ID
@@ -81,6 +153,7 @@ private:
 	Team* homeTeam_;		//主队
 	Team* guestTeam_;		//客队
 	Event* event_;			//赛事
+	MatchParameter* matchParameter_;//算法数据
 
 	vector<Match*> jiaoFengRecord_;			//交锋记录
 	vector<Match*> jiaoFengRecordSame_;		//主客相同交锋记录

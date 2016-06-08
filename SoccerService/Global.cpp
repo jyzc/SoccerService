@@ -4,6 +4,7 @@
 #include <iostream>			/* cout */
 #include "WXZNetRequest.h"
 #include "WXZDBOperator.h"
+#include "WXZMatch.h"
 
 #include "..\\MatchAlgorithm\\MatchAlgorithm.h"
 #pragma comment(lib, "..\\Debug\\MatchAlgorithm.lib")
@@ -137,7 +138,7 @@ void  Global::scanTodayThread()
 			netRequest.getMatchData(updateMatch);
 
 
-			//算法,是否封装dll？
+			//算法
 			CalculateH(updateMatch);
 		}
 

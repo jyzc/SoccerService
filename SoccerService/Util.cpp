@@ -97,6 +97,9 @@ std::string l_to_mbs(long val)
 
 long wcs_to_l(std::wstring val)
 {
+	if (val.size()<=0)
+		return 0;
+
 	std::wstringstream ss;
 	long s;
 	ss<<val;
@@ -105,6 +108,8 @@ long wcs_to_l(std::wstring val)
 }
 int wcs_to_i(std::wstring val)
 {
+	if (val.size()<=0)
+		return 0;
 	std::wstringstream ss;
 	int s;
 	ss<<val;
@@ -113,6 +118,9 @@ int wcs_to_i(std::wstring val)
 }
 BYTE wcs_to_b(std::wstring val)
 {
+	if (val.size()<=0)
+		return 0;
+
 	std::wstringstream ss;
 	unsigned short s;
 	ss<<val;
