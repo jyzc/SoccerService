@@ -51,6 +51,7 @@ sql::Connection* mysql_database::db_connect(string database)
 		cout << " (MySQL error code: " << e.getErrorCode();  
 		cout << ", SQLState: " << e.getSQLState() << " )" << endl;  
 	}  
+	return 0;
 }
 
 /** 
@@ -91,14 +92,14 @@ map<int,map<string,string> > mysql_database::fetch_map(sql::ResultSet *result,ma
     int k=0;  
     if((!field.empty())&&(field.size()>0))  
     {  
-            while(result->next())  
-            {  
-                    map<string,string> row;  
-                    for ( it=field.begin() ; it!=field.end() ;it++ )  
-                            row[it->first]=result->getString(it->second);  
-                    data[k]=row;  
-                    k++;  
-            }  
+        while(result->next())  
+        {  
+                map<string,string> row;  
+                for ( it=field.begin() ; it!=field.end() ;it++ )  
+                        row[it->first]=result->getString(it->second);  
+                data[k]=row;  
+                k++;  
+        }  
     }  
   
     return data ;  
