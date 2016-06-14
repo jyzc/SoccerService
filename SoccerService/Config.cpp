@@ -11,7 +11,8 @@ Config::Config( string filename, string delimiter,
 
 	std::ifstream in( filename.c_str() );  
 
-	if( !in ) throw File_not_found( filename );   
+	if( !in ) 
+		throw File_not_found( filename );   
 
 	in >> (*this);  
 }  

@@ -7,7 +7,16 @@
 #include <cppconn/prepared_statement.h>  
 #include <stdlib.h> 
 #include <iostream>  
+
+#include "Settings.h"
+
 #pragma comment(lib, "mysqlcppconn-static.lib")
+/*
+http://blog.csdn.net/sunylat/article/details/8480127
+http://dev.mysql.com/tech-resources/articles/mysql-connector-cpp.html#trx
+http://blog.sina.com.cn/s/blog_86fe5b440102v3mz.html
+http://developer.51cto.com/art/201104/257338.htm
+*/
 
 mysql_database::mysql_database()
 {
@@ -29,6 +38,17 @@ driver(NULL),con(NULL),stmt(NULL),result(NULL)
 	db_port = conf["db_port"];  
 	db_charset = conf["db_charset"];  
 }  
+
+mysql_database::mysql_database(DBSettings& settings):
+	driver(NULL),con(NULL),stmt(NULL),result(NULL)  
+{
+	db_host = settings.dbHost();  
+	db_name = settings.dbName();  
+	db_user = settings.dbUser();  
+	db_passwd =settings.dbPwd();  
+	db_port = settings.dbPort();  
+
+}
 
 //////////////////////////////////////////////////////////////////////////
 sql::Connection* mysql_database::db_connect(string database)

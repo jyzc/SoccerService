@@ -62,7 +62,6 @@ Global::Global()
 
 Global::~Global()
 {
-
 }
 
 void Global::init()

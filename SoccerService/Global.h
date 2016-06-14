@@ -7,6 +7,7 @@
 using namespace std;
 
 
+
 class Global
 {
 public:
@@ -42,6 +43,7 @@ private:
 	void resetScanOverThread();
 
 	pthread_mutex_t dbMutex_;		//数据库操作互斥体
+
 
 };
 

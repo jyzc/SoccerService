@@ -3,6 +3,7 @@
 #pragma once
 
 class Match;
+class DBSettings;
 
 class DBOperator
 {
@@ -16,6 +17,7 @@ public:
 	bool updateData(const vector<Match*> matchList);
 
 private:
+	DBSettings* dbSettings_;
 
 };
 

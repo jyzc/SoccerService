@@ -1,16 +1,19 @@
 #include "stdafx.h"
 #include "WXZDBOperator.h"
 #include "MysqlOperator.h"
+#include "Settings.h"
 
 // #pragma warning(disable:4251) 
 
 DBOperator::DBOperator()
 {
-
+	dbSettings_ = new DBSettings();
 }
 
 DBOperator::~DBOperator()
 {
+	if (dbSettings_)
+		delete dbSettings_;
 
 }
 
@@ -18,13 +21,15 @@ DBOperator::~DBOperator()
 //获得今天比赛数据
 void DBOperator::getTodayList(vector<Match*>& matchList)
 {
+	dbSettings_->loadFile("Settings.ini");
+	
 // 	map<string,string> config = conf.get_config();  
-// 	mysql_database db (config);  
-// 	db.db_connect();  
-// 	sql::ResultSet * rs;  
-// 	map<string,string> field ;  
-// 	field["0"]="v_name" ;//  
-// 	rs=db.query("select v_name  from  pi_data  limit 1 ");  
+	mysql_database db (*dbSettings_);  
+	db.db_connect();  
+	sql::ResultSet * rs;  
+	map<string,string> field ;  
+	field["0"]="TEAM_ID" ;//  
+	rs=db.query("select *  from  T_Team  limit 1 ");  
 // 	map<int,map<string,string> > rows;  
 // 	rows = db.fetch_map(rs,field);  
 // 	map<int,map<string,string> >::iterator  it;  

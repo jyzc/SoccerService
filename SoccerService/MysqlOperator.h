@@ -7,10 +7,13 @@
 #include <cppconn/resultset.h>  
 using namespace std;  
 
+class DBSettings;
+
 class mysql_database
 {
 public:
 	mysql_database();
+	mysql_database(DBSettings& settings);
 	mysql_database(map<string,string> &conf);
 	~mysql_database();
 
