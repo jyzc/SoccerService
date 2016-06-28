@@ -30,6 +30,9 @@ public:
 	void saveFile();
 	void saveFile(std::string filename);
 
+	bool isLoad() {return isLoad_;};
+	void setIsLoad(bool bval) {isLoad_ = bval;};
+
 private:
 	std::string dbHost_;
 	std::string dbName_;
@@ -39,6 +42,8 @@ private:
 	std::string dbCharset_;
 
 	std::string fileName_;
+
+	bool isLoad_;
 };
 
 

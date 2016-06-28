@@ -3,7 +3,8 @@
 #pragma once
 
 #include <map>
-#include "mysql_connection.h"  
+#include "mysql_connection.h" 
+#include <cppconn/sqlstring.h>
 #include <cppconn/resultset.h>  
 using namespace std;  
 
@@ -18,24 +19,31 @@ public:
 	~mysql_database();
 
 	sql::Connection* db_connect(string database = "");
+	void db_close();
+
+	int insert(std::string sql);
+	int multi_insert(std::string tableName, std::map<string, string>field);
 
 	int get_total(sql::ResultSet *result)  ;
 	sql::ResultSet *query(string sql) ;
-	bool squery(string sql)  ;
+	bool squery(string sql);
 	map<int,map<string,string> > fetch_map(sql::ResultSet *result, map<string,string>field)  ;
 
+	bool isConnect() {return isConnect_;};
 private:  
-	string  db_host;  
-	string  db_name;  
-	string  db_user;  
-	string  db_passwd;  
-	string  db_charset;  
-	string  db_port;  
+	std::string  db_host;  
+	std::string  db_name;  
+	std::string  db_user;  
+	std::string  db_passwd;  
+	std::string  db_charset;  
+	std::string  db_port;  
 
-	sql::Driver *driver;  
-	sql::Connection *con;  
-	sql::Statement *stmt;  
-	sql::ResultSet *result;  
+	sql::Driver *driver_;  
+	sql::Connection *con_;  
+	sql::Statement *stmt_;  
+	sql::ResultSet *result_;  
+
+	bool isConnect_;
 };
 
 

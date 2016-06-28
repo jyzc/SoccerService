@@ -11,7 +11,7 @@ DBSettings::DBSettings()
 	dbPort_ = "";
 	dbCharset_ = "";
 	fileName_ = "";
-
+	isLoad_ = false;
 }
 
 DBSettings::DBSettings(std::string filename)
@@ -23,6 +23,7 @@ DBSettings::DBSettings(std::string filename)
 	dbPort_ = "";
 	dbCharset_ = "";
 	fileName_ = filename;
+	isLoad_ = false;
 }
 
 DBSettings::~DBSettings()
@@ -45,6 +46,7 @@ void DBSettings::loadFile(std::string filename)
 	dbPwd_ = config.Read<string>("DBPwd");
 	dbPort_ = config.Read<string>("DBPort");
 // 	dbHost_ = config.Read<string>("DBHost");
+	isLoad_ = true;
 }
 
 void DBSettings::saveFile()

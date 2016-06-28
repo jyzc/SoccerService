@@ -95,6 +95,18 @@ std::string l_to_mbs(long val)
 	return s;
 }
 
+long mbs_to_l(std::string val)
+{
+	if (val.size()<=0)
+		return 0;
+
+	std::stringstream ss;
+	long s;
+	ss<<val;
+	ss>>s;
+	return s;
+}
+
 long wcs_to_l(std::wstring val)
 {
 	if (val.size()<=0)
